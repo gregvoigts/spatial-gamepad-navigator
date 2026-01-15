@@ -1,0 +1,36 @@
+{
+  "name": "gamepad-navigator",
+  "version": "0.1.0",
+  "description": "Gamepad-based spatial navigation Chrome extension",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "watch": "webpack --mode development --watch",
+    "clean": "rimraf dist",
+    "rebuild": "npm run clean && npm run build",
+    "test": "echo \"Open chrome://extensions and load as unpacked\"",
+    "zip": "zip -r gamepad-navigator.zip manifest.json dist/ icons/ -x '*.git*'"
+  },
+  "keywords": [
+    "gamepad",
+    "navigation",
+    "accessibility",
+    "chrome-extension",
+    "spatial-navigation"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.268",
+    "typescript": "^5.3.3",
+    "rimraf": "^5.0.5",
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4",
+    "ts-loader": "^9.5.1",
+    "copy-webpack-plugin": "^12.0.2"
+  }
+}

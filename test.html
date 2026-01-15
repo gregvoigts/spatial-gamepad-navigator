@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gamepad Navigator Test Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    h1 {
+      color: #1a73e8;
+    }
+    
+    .section {
+      margin: 40px 0;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin: 20px 0;
+    }
+    
+    .flex-row {
+      display: flex;
+      gap: 10px;
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      border-radius: 4px;
+    }
+    
+    button:hover {
+      background: #1557b0;
+    }
+    
+    a {
+      color: #1a73e8;
+      text-decoration: none;
+      padding: 8px 12px;
+      display: inline-block;
+      border: 1px solid #1a73e8;
+      border-radius: 4px;
+      margin: 4px;
+    }
+    
+    a:hover {
+      background: #e8f0fe;
+    }
+    
+    input, select, textarea {
+      padding: 8px;
+      font-size: 14px;
+      margin: 8px 0;
+      display: block;
+      width: 100%;
+      max-width: 300px;
+    }
+    
+    .status {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      padding: 10px 20px;
+      background: #4CAF50;
+      color: white;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+    
+    .status.disconnected {
+      background: #f44336;
+    }
+    
+    .long-content {
+      height: 1000px;
+      background: linear-gradient(to bottom, #e3f2fd, #fff);
+      padding: 20px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="gamepad-status" class="status disconnected">Gamepad: Disconnected</div>
+  
+  <h1>🎮 Gamepad Navigator Test Page</h1>
+  <p>This page is designed to test spatial navigation with various layouts and elements.</p>
+  
+  <!-- Simple Grid -->
+  <div class="section">
+    <h2>Grid Layout</h2>
+    <p>4x4 grid of buttons - test all directions</p>
+    <div class="grid">
+      <button>Button 1</button>
+      <button>Button 2</button>
+      <button>Button 3</button>
+      <button>Button 4</button>
+      <button>Button 5</button>
+      <button>Button 6</button>
+      <button>Button 7</button>
+      <button>Button 8</button>
+      <button>Button 9</button>
+      <button>Button 10</button>
+      <button>Button 11</button>
+      <button>Button 12</button>
+      <button>Button 13</button>
+      <button>Button 14</button>
+      <button>Button 15</button>
+      <button>Button 16</button>
+    </div>
+  </div>
+  
+  <!-- Horizontal Row -->
+  <div class="section">
+    <h2>Horizontal Navigation</h2>
+    <p>Row of links - test left/right navigation</p>
+    <div class="flex-row">
+      <a href="#link1">Link 1</a>
+      <a href="#link2">Link 2</a>
+      <a href="#link3">Link 3</a>
+      <a href="#link4">Link 4</a>
+      <a href="#link5">Link 5</a>
+      <a href="#link6">Link 6</a>
+    </div>
+  </div>
+  
+  <!-- Vertical Column -->
+  <div class="section">
+    <h2>Vertical Navigation</h2>
+    <p>Column of links - test up/down navigation</p>
+    <div style="display: flex; flex-direction: column; gap: 10px; max-width: 200px;">
+      <a href="#item1">Item 1</a>
+      <a href="#item2">Item 2</a>
+      <a href="#item3">Item 3</a>
+      <a href="#item4">Item 4</a>
+      <a href="#item5">Item 5</a>
+    </div>
+  </div>
+  
+  <!-- Form Elements -->
+  <div class="section">
+    <h2>Form Navigation</h2>
+    <p>Test navigation through form inputs</p>
+    <form>
+      <label>Text Input:</label>
+      <input type="text" placeholder="Enter text">
+      
+      <label>Email:</label>
+      <input type="email" placeholder="Enter email">
+      
+      <label>Select:</label>
+      <select>
+        <option>Option 1</option>
+        <option>Option 2</option>
+        <option>Option 3</option>
+      </select>
+      
+      <label>Textarea:</label>
+      <textarea placeholder="Enter message" rows="4"></textarea>
+      
+      <button type="button">Submit</button>
+    </form>
+  </div>
+  
+  <!-- Mixed Layout -->
+  <div class="section">
+    <h2>Complex Mixed Layout</h2>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <div>
+        <h3>Column 1</h3>
+        <button>Action A</button>
+        <button>Action B</button>
+        <a href="#details">View Details</a>
+      </div>
+      <div>
+        <h3>Column 2</h3>
+        <button>Action C</button>
+        <button>Action D</button>
+        <a href="#more">Learn More</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Scroll Test -->
+  <div class="section">
+    <h2>Scroll Test Area</h2>
+    <p>Navigate down to test automatic scrolling</p>
+    <div class="long-content">
+      <p>This is a tall section to test scrolling behavior.</p>
+      <button style="margin-top: 200px;">Button Near Top</button>
+      <button style="margin-top: 200px;">Button In Middle</button>
+      <button style="margin-top: 200px;">Button Near Bottom</button>
+    </div>
+  </div>
+  
+  <!-- Dense Area -->
+  <div class="section">
+    <h2>Dense Element Area</h2>
+    <p>Many elements close together - test precision</p>
+    <div class="flex-row">
+      <button>A</button>
+      <button>B</button>
+      <button>C</button>
+      <button>D</button>
+      <button>E</button>
+      <button>F</button>
+      <button>G</button>
+      <button>H</button>
+      <button>I</button>
+      <button>J</button>
+      <button>K</button>
+      <button>L</button>
+    </div>
+  </div>
+
+  <script>
+    // Gamepad connection status indicator
+    window.addEventListener('gamepadconnected', (e) => {
+      const status = document.getElementById('gamepad-status');
+      status.textContent = `Gamepad: ${e.gamepad.id}`;
+      status.classList.remove('disconnected');
+      console.log('Gamepad connected:', e.gamepad);
+    });
+
+    window.addEventListener('gamepaddisconnected', (e) => {
+      const status = document.getElementById('gamepad-status');
+      status.textContent = 'Gamepad: Disconnected';
+      status.classList.add('disconnected');
+      console.log('Gamepad disconnected');
+    });
+
+    // Button click feedback
+    document.querySelectorAll('button').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        console.log('Button clicked:', e.target.textContent);
+        e.target.textContent += ' ✓';
+        setTimeout(() => {
+          e.target.textContent = e.target.textContent.replace(' ✓', '');
+        }, 1000);
+      });
+    });
+  </script>
+</body>
+</html>

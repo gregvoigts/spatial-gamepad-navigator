@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gamepad Navigator Settings</title>
+  <style>
+    body {
+      width: 400px;
+      padding: 16px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      font-size: 18px;
+      margin: 0 0 16px 0;
+      color: #333;
+    }
+
+    .section {
+      background: white;
+      padding: 12px;
+      margin-bottom: 12px;
+      border-radius: 6px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .section-title {
+      font-weight: 600;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .setting {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .setting:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      flex: 1;
+      font-size: 13px;
+      color: #666;
+    }
+
+    input[type="number"] {
+      width: 80px;
+      padding: 4px 8px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    button {
+      flex: 1;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .save-btn {
+      background: #0078d4;
+      color: white;
+    }
+
+    .save-btn:hover {
+      background: #106ebe;
+    }
+
+    .reset-btn {
+      background: #e0e0e0;
+      color: #333;
+    }
+
+    .reset-btn:hover {
+      background: #d0d0d0;
+    }
+
+    .status {
+      text-align: center;
+      font-size: 12px;
+      color: #0078d4;
+      margin-top: 8px;
+      min-height: 16px;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #999;
+      margin-top: 4px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <h1>⚙️ Gamepad Navigator Settings</h1>
+
+  <div class="section">
+    <div class="section-title">Navigation Scoring</div>
+    <div class="setting">
+      <label>
+        Primary Axis Weight
+        <div class="hint">Weight for movement in desired direction (0-1)</div>
+      </label>
+      <input type="number" id="primaryAxisWeight" min="0" max="1" step="0.1">
+    </div>
+    <div class="setting">
+      <label>
+        Perpendicular Axis Weight
+        <div class="hint">Weight for perpendicular movement (0-1)</div>
+      </label>
+      <input type="number" id="perpendicularAxisWeight" min="0" max="1" step="0.1">
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Scroll Behavior</div>
+    <div class="setting">
+      <label>
+        Scroll Amount (px)
+        <div class="hint">Fallback scroll distance when no target</div>
+      </label>
+      <input type="number" id="scrollAmount" min="50" max="500" step="50">
+    </div>
+    <div class="setting">
+      <label>
+        Scroll Throttle (ms)
+        <div class="hint">Debounce delay for scroll events</div>
+      </label>
+      <input type="number" id="scrollThrottle" min="50" max="500" step="50">
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Gamepad Input</div>
+    <div class="setting">
+      <label>
+        Analog Deadzone
+        <div class="hint">Minimum stick movement to register (0-1)</div>
+      </label>
+      <input type="number" id="analogDeadzone" min="0" max="1" step="0.1">
+    </div>
+    <div class="setting">
+      <label>
+        Analog Cooldown (ms)
+        <div class="hint">Delay between analog stick triggers</div>
+      </label>
+      <input type="number" id="analogCooldown" min="100" max="1000" step="50">
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">DOM Observation</div>
+    <div class="setting">
+      <label>
+        Observer Timeout (ms)
+        <div class="hint">Debounce delay for DOM mutations</div>
+      </label>
+      <input type="number" id="observerTimeout" min="50" max="1000" step="50">
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="save-btn" id="saveBtn">Save Settings</button>
+    <button class="reset-btn" id="resetBtn">Reset to Defaults</button>
+  </div>
+
+  <div class="status" id="status"></div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

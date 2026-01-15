@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Gamepad Spatial Navigation",
+  "version": "0.1.0",
+  "description": "Gamepad-based spatial navigation for arbitrary websites",
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "dist/popup.html",
+    "default_title": "Gamepad Navigator Settings"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/content.js"],
+      "css": ["dist/overlay.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icon16.svg",
+    "48": "icon48.svg",
+    "128": "icon128.svg"
+  }
+}

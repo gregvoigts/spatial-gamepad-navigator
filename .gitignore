@@ -1,0 +1,39 @@
+# Node modules
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Build outputs
+dist/
+build/
+*.crx
+*.pem
+*.zip
+
+# TypeScript
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# PNG icons (if generated from SVG)
+# Remove this line once you have final PNG icons
+icon*.png
