@@ -93,6 +93,7 @@ function findNext(dir: Direction): NavNode | null {
   return candidates[0];
 }
 
+
 /**
  * Sets focus to a navigation node
  */
@@ -104,14 +105,13 @@ export function focusNode(node: NavNode | null): void {
 
   // Remove focus class and hover state from current element
   if (state.current) {
-    state.current.el.classList.remove('gamepad-focus');
+    state.current.el.classList.remove('gamepad-outline', 'gamepad-display-override');
   }
 
   // Update state
   state.current = node;
 
-  // Add focus class and focus element
-  node.el.classList.add('gamepad-focus');
+  // Focus the element 
   node.el.focus({ preventScroll: true });
 
   // Scroll element into the vertival middle thrid of the viewport if needed
@@ -179,7 +179,7 @@ export function activate(): void {
         focusNode(newFocused);
       }
     }
-  }, OBSERVER_TIMEOUT+50);
+  }, OBSERVER_TIMEOUT + 50);
 }
 
 /**
@@ -321,7 +321,6 @@ export function updateNodes(nodes: NavNode[]): void {
   if (state.current) {
     const updatedCurrent = nodes.find(n => n.el === state.current!.el)
     if (!updatedCurrent) {
-      state.current.el.classList.remove('gamepad-focus');
       state.current.el.blur();
       state.current = null;
     }

@@ -37,9 +37,10 @@ function rebuild(): void {
 
   // Collect nodes (filtered to dialog if present)
   const nodes = collectNodes(dialog);
+  console.log(nodes);
   updateNodes(nodes);
 
-  console.log(`${LOG_PREFIX} Discovered ${nodes.length} focusable elements${dialog ? ' in dialog' : ''}`);
+  // console.log(`${LOG_PREFIX} Discovered ${nodes.length} focusable elements${dialog ? ' in dialog' : ''}`);
 }
 
 /**

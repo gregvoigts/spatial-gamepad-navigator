@@ -3,7 +3,7 @@
   "name": "Gamepad Spatial Navigation",
   "version": "0.1.0",
   "description": "Gamepad-based spatial navigation for arbitrary websites",
-  "permissions": ["storage"],
+  "permissions": ["storage", "tabs"],
   "action": {
     "default_popup": "dist/popup.html",
     "default_title": "Gamepad Navigator Settings"

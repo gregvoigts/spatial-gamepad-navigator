@@ -45,6 +45,7 @@ interface ButtonState {
   right: boolean;
   a: boolean;
   b: boolean;
+  x: boolean;
   leftTrigger: boolean;
 }
 
@@ -56,6 +57,7 @@ let previousState: ButtonState = {
   right: false,
   a: false,
   b: false,
+  x: false,
   leftTrigger: false
 };
 
@@ -77,7 +79,8 @@ function handleButtons(gamepad: Gamepad): void {
     right: gamepad.buttons[15]?.pressed || false,
     a: gamepad.buttons[0]?.pressed || false,  // A/Cross button
     b: gamepad.buttons[1]?.pressed || false,   // B/Circle button
-    leftTrigger: gamepad.buttons[6]?.pressed || false  // Left trigger (L2/LT)
+    x: gamepad.buttons[2]?.pressed || false,   // X/Square button
+    leftTrigger: gamepad.buttons[6]?.pressed || false,  // Left trigger (L2/LT)
   };
 
   // Detect button press (was not pressed, now is pressed)

@@ -1,7 +1,8 @@
 // DOM element discovery module
 // Finds and tracks focusable elements for spatial navigation
 
-import { FOCUSABLE_SELECTORS, OBSERVER_TIMEOUT, VIEWPORT_MARGIN_HORIZONTAL, VIEWPORT_MARGIN_VERTICAL } from './constants';
+import { tabbable } from 'tabbable';
+import { OBSERVER_TIMEOUT, VIEWPORT_MARGIN_HORIZONTAL, VIEWPORT_MARGIN_VERTICAL } from './constants';
 
 /**
  * Navigation node representing a focusable element
@@ -58,15 +59,14 @@ function createNode(el: Element): NavNode | null {
  * If a dialog is detected, only returns elements within the dialog
  */
 export function collectNodes(dialogContainer?: HTMLElement | null): NavNode[] {
-  const selector = FOCUSABLE_SELECTORS.join(',');
-  
-  // If we have a dialog container, only search within it
-  const searchRoot = dialogContainer || document;
-  const elements = searchRoot.querySelectorAll(selector);
-  
-  return Array.from(elements)
-    .map(createNode)
-    .filter((node): node is NavNode => node !== null);
+  const searchRoot = dialogContainer || document.body;
+
+  const tabbables = tabbable(searchRoot, {
+  getShadowRoot: (node) => {
+    return node.shadowRoot ?? undefined;
+  }
+});
+  return Array.from(tabbables).map(createNode).filter((node): node is NavNode => node !== null);
 }
 
 /**
