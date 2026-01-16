@@ -36,9 +36,23 @@ export let ANALOG_COOLDOWN = 300; // ms between analog stick triggers
 export let FOCUS_VALIDATION_INTERVAL = 1000; // ms between focus accessibility checks
 
 /**
+ * Debug settings
+ */
+let VERBOSE = false; // Enable console logging
+
+/**
  * Logging prefix
  */
-export const LOG_PREFIX = '[GamepadNav]';
+const LOG_PREFIX = '[GamepadNav]';
+
+/**
+ * Console log wrapper that respects VERBOSE setting
+ */
+export function log(...args: any[]): void {
+  if (VERBOSE) {
+    console.log(LOG_PREFIX, ...args);
+  }
+}
 
 /**
  * Loads settings from chrome.storage and updates constants
@@ -52,10 +66,10 @@ export async function loadSettings(): Promise<void> {
     const settings = result[storageKey];
 
     if (!settings) {
-      console.log(`${LOG_PREFIX} No custom settings found for ${hostname}, using defaults.`);
+        log(`No custom settings found for ${hostname}, using defaults.`);      
       return;
     }
-    
+
     PRIMARY_AXIS_WEIGHT = settings.primaryAxisWeight;
     PERPENDICULAR_AXIS_WEIGHT = settings.perpendicularAxisWeight;
     SCROLL_AMOUNT = settings.scrollAmount;
@@ -70,9 +84,10 @@ export async function loadSettings(): Promise<void> {
     VIEWPORT_MARGIN_VERTICAL = settings.viewportMarginVertical;
     OBSERVER_TIMEOUT = settings.observerTimeout;
     FOCUS_VALIDATION_INTERVAL = settings.focusValidationInterval;
+    VERBOSE = settings.verbose ?? false;
 
-    console.log(`${LOG_PREFIX} Settings loaded for ${hostname}:`, settings);
+    log(`Settings loaded for ${hostname}:`, settings);    
   } catch (error) {
-    console.log(`${LOG_PREFIX} Using default settings (storage unavailable)`);
+    log('Using default settings (storage unavailable)');
   }
 }

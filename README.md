@@ -1,19 +1,17 @@
-# Gamepad Spatial Navigator
+# Gamepad Navigator
 
-A Chrome extension that enables gamepad-based spatial navigation for arbitrary websites, similar to how TV browsers work.
+A small Chrome extension I vibe coded in a few days that enables gamepad-based navigation for websites using spatial algorithms similar to TV browsers. Navigate any website with your gamepad's D-pad or analog stick, automatically discovering and moving between interactive elements based on their visual position. I mainly built this for a SteamOS smart TV setup, so its focuses mainly on streaming sites. But in theory it should work on any website. It uses [tabbable](https://github.com/focus-trap/tabbable) to discover focusable elements and the Gamepad API for input. 
 
 ## Features
 
-- **Spatial Navigation**: Navigate websites using gamepad D-pad or analog stick based on visual layout
-- **Spotlight Algorithm**: Uses TV-style directional scoring to intelligently select the next element
-- **Works on Any Site**: Automatically discovers focusable elements on arbitrary websites
-- **Visual Feedback**: Blue outline highlights the currently focused element
-- **Scroll Support**: Automatically scrolls when no elements are found in the navigation direction
-- **Dynamic Content**: Tracks DOM changes and updates navigation nodes automatically
+- **Spatial Navigation**: Navigate using directional input based on element positions
+- **Spotlight Algorithm**: TV-style directional scoring for intelligent element selection
+- **Universal Compatibility**: Works on arbitrary websites without site-specific configuration
+- **Dialog Focus Trapping**: Automatically detects and traps focus in popups/modals
+- **Virtual Keyboard**: On-screen keyboard for text input with gamepad control
+- **Per-Site Settings**: Customize behavior for individual websites
 
 ## Installation
-
-### Load as Unpacked Extension
 
 1. Clone or download this repository
 2. Open Chrome and navigate to `chrome://extensions/`
@@ -22,98 +20,100 @@ A Chrome extension that enables gamepad-based spatial navigation for arbitrary w
 5. Select the `GamepadNavigator` folder
 6. The extension is now active on all websites
 
-## Usage
+## Controls
 
-### Controls
+### Basic Navigation
+- **D-Pad / Left Analog Stick**: Navigate between elements spatially
+- **A Button**: Activate/click the focused element
+- **B Button**: 
+  - Close dialogs/popups when detected
+  - Go one step back in navigation history otherwise
+- **Left Trigger**: Simulate hover on focused element
 
-- **D-Pad / Left Analog Stick**: Navigate between focusable elements
-  - Up/Down/Left/Right: Move focus spatially
-- **A Button** (typically button 0): Activate/click the focused element
-- **B Button** (typically button 1): Blur/unfocus current element
+### Text Input
+When a text input is focused:
+- **Virtual Keyboard** appears automatically
+- **D-Pad**: Navigate between keys
+- **A Button**: Type the selected key
+- Press **Done** or **B Button** to close keyboard
 
-### How It Works
+## Settings
 
-1. **Element Discovery**: Finds all focusable elements (links, buttons, inputs, etc.)
-2. **Spatial Mapping**: Creates a spatial graph based on element positions on screen
-3. **Directional Selection**: When you press a direction, scores candidates based on:
-   - Distance in the primary direction (30% weight)
-   - Perpendicular distance from axis (70% weight)
-4. **Focus Management**: Highlights and focuses the selected element
-5. **Scroll Fallback**: If no element is found, scrolls the page
+Access settings by clicking the extension icon in Chrome's toolbar. Settings are saved per-site (based on hostname).
 
-### Supported Elements
+### Navigation Settings
 
-The extension automatically detects:
-- Links (`<a href>`)
-- Buttons (`<button>`)
-- Form inputs (`<input>`, `<select>`, `<textarea>`)
-- Elements with `tabindex`
-- Elements with `role="button"` or `role="link"`
-- Contenteditable elements
+**Primary Axis Weight** (default: 0.3)
+- How much weight to give distance along the intended direction
+- Lower values favor elements more directly in line
 
-## Architecture
+**Perpendicular Axis Weight** (default: 0.7)
+- How much weight to give distance perpendicular to intended direction
+- Higher values prevent diagonal jumps
 
-```
-GamepadNavigator/
-├── manifest.json          # Extension configuration
-├── content/
-│   ├── main.js           # Bootstrap and coordination
-│   ├── dom.js            # Element discovery
-│   ├── navigator.js      # Spatial navigation algorithm
-│   ├── gamepad.js        # Input handling
-│   └── overlay.css       # Focus styling
-```
+**Scroll Amount** (default: 200 pixels)
+- How far to scroll when no element is found in the navigation direction
 
-### Core Modules
+**Focus Upper/Lower Bound** (default: 0.25 / 0.75)
+- Viewport regions that trigger auto-scrolling when focus moves outside them
 
-- **dom.js**: Finds focusable elements, filters invisible ones, observes mutations
-- **navigator.js**: Implements Spotlight-like directional scoring and selection
-- **gamepad.js**: Polls gamepad state, handles button presses and analog input
-- **main.js**: Initializes all components, manages lifecycle
+### Input Settings
 
-## Technical Details
+**Analog Deadzone** (default: 0.5)
+- Minimum analog stick deflection to register as input (0.0 - 1.0)
 
-### Navigation Algorithm
+**Analog Cooldown** (default: 300ms)
+- Delay between repeated analog stick navigation triggers
 
-Based on the Enact Spotlight spatial navigation system:
+### Performance Settings
 
-1. **Direction Filtering**: Only considers elements in the intended direction
-2. **Weighted Scoring**: 
-   - Primary axis distance: 30%
-   - Perpendicular distance: 70%
-   - Lower score wins
-3. **Center-to-Center**: Uses element centers for spatial calculations
-4. **Scroll Fallback**: Scrolls 200px when no candidate found
+**Observer Timeout** (default: 200ms)
+- Debounce delay for DOM mutation detection
 
-### Performance
+**Scroll Throttle** (default: 150ms)
+- Minimum time between scroll event processing
 
-- Mutation observer with 100ms debouncing
-- Scroll event throttling (150ms)
-- Resize event throttling (250ms)
-- Analog stick cooldown (300ms)
-- Periodic focus validation (1s interval)
+**Resize Throttle** (default: 250ms)
+- Minimum time between resize event processing
+
+**Focus Validation Interval** (default: 1000ms)
+- How often to check if focused element is still valid
+
+### Element Discovery
+
+**Viewport Margin Horizontal/Vertical** (default: 0 / 150 pixels)
+- Allow elements slightly outside viewport to be considered focusable
+
+### Debug Settings
+
+**Verbose Logging** (default: off)
+- Enable console.log output for debugging
+- Logs navigation decisions, element discovery, and gamepad input
+- Useful for troubleshooting or understanding extension behavior
+
+## How It Works
+
+1. **Element Discovery**: Scans page for focusable elements based on tabbable library
+2. **Directional Scoring**: When you press a direction:
+   - Filters candidates to those in intended direction
+   - Scores each candidate based on weighted distance metrics
+   - Selects the best (lowest score) candidate
+5. **Dialog Detection**: Monitors for new popups/modals and traps focus within them
 
 ## Browser Compatibility
 
 - Chrome/Edge (Manifest V3)
-- Requires Gamepad API support (all modern browsers)
+- Requires Gamepad API support
 
-## Known Limitations
+## Development
 
-- iFrames require separate injection (not currently supported)
-- Canvas/WebGL content is not navigable
-- Some complex web apps may need per-site tuning
-- Overlapping elements may cause ambiguous navigation
+Build the extension:
+```bash
+npm install
+npm run build
+```
 
-## Future Improvements
-
-- [ ] Row affinity (prefer same horizontal row)
-- [ ] Focus groups (nav bars, menus)
-- [ ] Modal/dialog focus trapping
-- [ ] iFrame support
-- [ ] Per-site configuration overrides
-- [ ] Scroll container awareness
-- [ ] Diagonal jump suppression
+The built files will be in the `dist/` folder.
 
 ## Inspiration
 
@@ -125,11 +125,3 @@ This extension is based on concepts from:
 ## License
 
 MIT License - feel free to modify and extend!
-
-## Contributing
-
-Contributions welcome! Areas that need work:
-- Better diagonal navigation handling
-- Scroll container detection
-- Focus group management
-- Per-site configuration UI

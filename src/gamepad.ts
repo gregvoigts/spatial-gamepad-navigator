@@ -2,7 +2,7 @@
 // Polls gamepad state and triggers navigation actions
 
 import { navigate, activate, state, closeDialog } from './navigator';
-import { ANALOG_DEADZONE, ANALOG_COOLDOWN, LOG_PREFIX } from './constants';
+import { ANALOG_DEADZONE, ANALOG_COOLDOWN, log } from './constants';
 import { keyboardState, navigateKeyboard, activateKey, hideKeyboard } from './keyboard';
 
 /**
@@ -25,7 +25,7 @@ function simulateHover(): void {
 function endHover(): void {
   if (!state.current_hover) return;
 
-  console.log(`${LOG_PREFIX} Ending hover on element:`, state.current_hover.el);
+  log('Ending hover on element:', state.current_hover.el);
 
   const el = state.current_hover.el;
   state.current_hover = null; 
@@ -124,7 +124,7 @@ function handleButtons(gamepad: Gamepad): void {
     if (keyboardState.container) {
       hideKeyboard();
     } else if (state.dialog.container) {
-      console.log(`${LOG_PREFIX} Closing dialog with B button`);
+      log('Closing dialog with B button');
       closeDialog();
       // Trigger rebuild after a short delay to update focus context
       setTimeout(() => {
@@ -213,7 +213,7 @@ export function initGamepad(): void {
     if (gamepads[i]) {
       gamepadConnected = true;
       gamepadIndex = i;
-      console.log(`${LOG_PREFIX} Gamepad connected: ${gamepads[i]!.id}`);
+      log(`Gamepad connected: ${gamepads[i]!.id}`);
       break;
     }
   }
@@ -222,14 +222,14 @@ export function initGamepad(): void {
   window.addEventListener('gamepadconnected', (e: GamepadEvent) => {
     gamepadConnected = true;
     gamepadIndex = e.gamepad.index;
-    console.log(`${LOG_PREFIX} Gamepad connected: ${e.gamepad.id}`);
+    log(`Gamepad connected: ${e.gamepad.id}`);
   });
 
   window.addEventListener('gamepaddisconnected', (e: GamepadEvent) => {
     if (e.gamepad.index === gamepadIndex) {
       gamepadConnected = false;
       gamepadIndex = -1;
-      console.log(`${LOG_PREFIX} Gamepad disconnected`);
+      log('Gamepad disconnected');
     }
   });
 

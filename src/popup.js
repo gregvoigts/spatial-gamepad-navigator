@@ -14,7 +14,8 @@ const DEFAULT_SETTINGS = {
   viewportMarginHorizontal: 0,
   viewportMarginVertical: 150,
   observerTimeout: 200,
-  focusValidationInterval: 1000
+  focusValidationInterval: 1000,
+  verbose: false
 };
 
 let currentHostname = '';
@@ -56,6 +57,7 @@ async function loadSettings() {
   document.getElementById('viewportMarginVertical').value = settings.viewportMarginVertical;
   document.getElementById('observerTimeout').value = settings.observerTimeout;
   document.getElementById('focusValidationInterval').value = settings.focusValidationInterval;
+  document.getElementById('verbose').checked = settings.verbose ?? false;
 }
 
 // Save settings to storage
@@ -85,7 +87,8 @@ async function saveSettings() {
     viewportMarginHorizontal: parseInt(document.getElementById('viewportMarginHorizontal').value),
     viewportMarginVertical: parseInt(document.getElementById('viewportMarginVertical').value),
     observerTimeout: parseInt(document.getElementById('observerTimeout').value),
-    focusValidationInterval: parseInt(document.getElementById('focusValidationInterval').value)
+    focusValidationInterval: parseInt(document.getElementById('focusValidationInterval').value),
+    verbose: document.getElementById('verbose').checked
   };
 
   const storageKey = `settings_${hostname}`;

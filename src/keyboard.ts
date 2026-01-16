@@ -1,6 +1,6 @@
 // Virtual keyboard for gamepad text input
 
-import { LOG_PREFIX } from './constants';
+import { log } from './constants';
 
 const KEYBOARD_LAYOUT = [
   ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'],
@@ -34,7 +34,7 @@ export function showKeyboard(input: HTMLInputElement | HTMLTextAreaElement): voi
     hideKeyboard();
   }
 
-  console.log(`${LOG_PREFIX} Showing virtual keyboard for input`);
+  log('Showing virtual keyboard for input');
 
   // Create keyboard container
   const container = document.createElement('div');
@@ -109,7 +109,7 @@ export function hideKeyboard(): void {
     keyboardState.container.remove();
     keyboardState.container = null;
     keyboardState.targetInput = null;
-    console.log(`${LOG_PREFIX} Keyboard hidden`);
+    log('Keyboard hidden');
   }
 }
 
@@ -194,7 +194,7 @@ export function activateKey(): void {
   switch (selectedKey) {
     case '⇧':
       keyboardState.shiftActive = !keyboardState.shiftActive;
-      console.log(`${LOG_PREFIX} Shift ${keyboardState.shiftActive ? 'ON' : 'OFF'}`);
+      log(`Shift ${keyboardState.shiftActive ? 'ON' : 'OFF'}`);
       break;
 
     case '⌫':

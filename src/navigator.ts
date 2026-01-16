@@ -2,7 +2,7 @@
 // Implements Spotlight-like directional navigation logic
 
 import type { NavNode } from './dom';
-import { PRIMARY_AXIS_WEIGHT, PERPENDICULAR_AXIS_WEIGHT, SCROLL_AMOUNT, FOCUS_UPPER_BOUND, FOCUS_LOWER_BOUND, OBSERVER_TIMEOUT } from './constants';
+import { PRIMARY_AXIS_WEIGHT, PERPENDICULAR_AXIS_WEIGHT, SCROLL_AMOUNT, FOCUS_UPPER_BOUND, FOCUS_LOWER_BOUND, OBSERVER_TIMEOUT, log } from './constants';
 import { showKeyboard, hideKeyboard } from './keyboard';
 
 /**
@@ -127,7 +127,7 @@ export function focusNode(node: NavNode | null): void {
     window.scrollBy({ top: scrollY, behavior: 'smooth' });
   }
 
-  console.log(`[GamepadNav] Focused element:`, node.el);
+  log('Focused element:', node.el);
 
   // Show virtual keyboard for text inputs
   const tagName = node.el.tagName.toLowerCase();
@@ -174,7 +174,7 @@ export function activate(): void {
   setTimeout(() => {
     if (document.activeElement !== el) {
       const newFocused = state.nodes.find(n => n.el === document.activeElement);
-      console.log(`[GamepadNav] New focused element after activation:`, newFocused ? newFocused.el : null);
+      log('New focused element after activation:', newFocused ? newFocused.el : null);
       if (newFocused) {
         focusNode(newFocused);
       }
@@ -186,7 +186,7 @@ export function activate(): void {
  * Handles scroll fallback when no candidate found
  */
 function scrollFallback(dir: Direction): void {
-  console.log(`[GamepadNav] Scrolling fallback in direction: ${dir}`);
+  log(`Scrolling fallback in direction: ${dir}`);
   switch (dir) {
     case 'down':
       window.scrollBy({ top: SCROLL_AMOUNT, behavior: 'smooth' });

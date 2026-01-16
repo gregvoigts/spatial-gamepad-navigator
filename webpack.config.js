@@ -27,7 +27,9 @@ module.exports = {
       patterns: [
         { from: 'src/overlay.css', to: 'overlay.css' },
         { from: 'src/popup.html', to: 'popup.html' },
-        { from: 'src/popup.js', to: 'popup.js' }
+        { from: 'src/popup.js', to: 'popup.js' },
+        { from: 'manifest.json', to: 'manifest.json' },
+        { from: 'icons', to: 'icons' }
       ]
     })
   ]
